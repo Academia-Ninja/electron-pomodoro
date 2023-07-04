@@ -1,3 +1,8 @@
 import './index.css'
 
-console.log('Hello World!')
+document.addEventListener('load', function () {
+  window.electronAPI.sayHello('Hello backend!')
+  window.electronAPI.listenHello((event, args) => {
+    console.log(args)
+  })
+})
