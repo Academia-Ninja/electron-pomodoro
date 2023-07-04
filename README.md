@@ -1,1 +1,1 @@
-# :potted_plant: Pomodoro
+# :deciduous_tree: Pomodoro
