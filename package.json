@@ -5,7 +5,7 @@
   "description": "Pomodoro desenvolvido com o framework Electron",
   "main": ".vite/build/main.js",
   "scripts": {
-    "start": "electron-forge start",
+    "start": "electron-forge start -l",
     "package": "electron-forge package",
     "make": "electron-forge make",
     "publish": "electron-forge publish"
