@@ -1,5 +1,5 @@
 import { app, BrowserWindow, Menu } from 'electron'
-import { join } from 'path'
+import path from 'path'
 
 import './backend'
 
@@ -8,12 +8,16 @@ if (require('electron-squirrel-startup')) {
 }
 
 const createWindow = () => {
+  if (process.platform === 'win32') {
+    app.setAppUserModelId(app.name)
+  }
+
   const mainWindow = new BrowserWindow({
     width: 300,
     height: 400,
     resizable: false,
     webPreferences: {
-      preload: join(__dirname, 'preload.js')
+      preload: path.join(__dirname, 'preload.js')
     }
   })
 
@@ -23,7 +27,7 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)
     mainWindow.webContents.openDevTools()
   } else {
-    mainWindow.loadFile(join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
+    mainWindow.loadFile(path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`))
   }
 }
 
