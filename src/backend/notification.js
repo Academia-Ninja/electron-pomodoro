@@ -1,15 +1,22 @@
 import { Notification } from 'electron'
 
 /**
- * Shows a system notification
+ * Returns a Notification instance
  * @param {string} title
  * @param {string} message
+ * @param {NotificationConstructorOptions} options
+ * @returns {Notification}
  */
-export const notify = (title, message) => {
+export const notify = (title, message, options = {}) => {
   if (!title || typeof title !== 'string') { throw new Error('The title has not been defined or it`s not a string') }
   if (!message || typeof message !== 'string') { throw new Error('The message has not been defined or it`s not a string') }
 
-  new Notification({
-    title, body: message
-  }).show()
+  const notify = new Notification({
+    title,
+    body: message,
+    silent: false,
+    ...options
+  })
+
+  return notify
 }

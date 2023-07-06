@@ -2,16 +2,15 @@ import fs from 'fs'
 import Loki from 'lokijs'
 import path from 'path'
 
-const DATABASE_PATH = path.join(__dirname, 'data.db')
-
-if (!fs.existsSync(DATABASE_PATH)) { fs.openSync(DATABASE_PATH, 'w') }
-
 /**
  * Returns the lokijs database instance
  * @returns {Loki}
  */
 export const database = () => {
-  if (!database.instace) { database.instance = new Loki(DATABASE_PATH) }
+  const DATABASE_PATH = path.join(__dirname, 'data.db')
+
+  if (!fs.existsSync(DATABASE_PATH)) { fs.openSync(DATABASE_PATH, 'w') }
+  if (!database.instance) { database.instance = new Loki(DATABASE_PATH) }
 
   return database.instance
 }
