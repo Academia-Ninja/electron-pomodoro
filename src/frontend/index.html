@@ -4,14 +4,22 @@
 <head>
   <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'wasm-unsafe-eval'">
   <meta charset="UTF-8" />
-  <title>Hello World!</title>
+  <title>Pomodoro</title>
 
 </head>
 
 <body>
   <div id="app">
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
+    <img src="./assets/images/tomato.png" width="50" />
+    <div id="countdown" class="countdown">
+      <span id="countdown-minute" class="timer">25</span>
+      <span class="timer">:</span>
+      <span id="countdown-second" class="timer">00</span>
+    </div>
+    <div class="actions">
+      <button id="countdown-start"><img src="./assets/images/start.svg" /></button>
+      <button id="countdown-reset"><img src="./assets/images/reset.svg" /></button>
+    </div>
   </div>
 
   <script type="module" crossorigin src="./renderer.js"></script>

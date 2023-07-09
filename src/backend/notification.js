@@ -7,9 +7,9 @@ import { Notification } from 'electron'
  * @param {NotificationConstructorOptions} options
  * @returns {Notification}
  */
-export const notify = (title, message, options = {}) => {
+export const notify = (title, message = null, options = {}) => {
   if (!title || typeof title !== 'string') { throw new Error('The title has not been defined or it`s not a string') }
-  if (!message || typeof message !== 'string') { throw new Error('The message has not been defined or it`s not a string') }
+  if (message && typeof message !== 'string') { throw new Error('The message must be a string') }
 
   const notify = new Notification({
     title,
