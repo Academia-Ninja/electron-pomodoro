@@ -36,13 +36,16 @@ const startCountdown = () => {
         },
         onFinished: () => {
           _api.countdownFinished()
+
+          clearCountdown()
+          setData()
         }
       }
     )
   }
 }
 
-function getData() {
+function setData() {
   countdownMinuteSpan.innerText = String(_data.countdownTimeInMinutes).padStart(2, '0')
 }
 
@@ -52,7 +55,7 @@ function registerDOMEvents() {
 }
 
 function render() {
-  getData()
+  setData()
   registerDOMEvents()
 }
 
