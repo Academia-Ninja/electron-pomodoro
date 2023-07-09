@@ -1,7 +1,7 @@
 import './assets/css/index.css'
 import { countdownTimer } from './assets/js/countdown'
 
-// * elements object
+// * Elements object
 const countdownMinuteSpan = document.getElementById('countdown-minute')
 const countdownSecondSpan = document.getElementById('countdown-second')
 const countdownStartButton = document.getElementById('countdown-start')
@@ -9,7 +9,7 @@ const countdownResetButton = document.getElementById('countdown-reset')
 const countdownIncrementButton = document.getElementById('countdown-increment')
 const countdownDecrementButton = document.getElementById('countdown-decrement')
 
-// * globals object
+// * Globals object
 const _api = window.api
 const _data = {
   countdownTimeInMinutes: 1,
@@ -17,10 +17,10 @@ const _data = {
 }
 
 const resetCountdown = () => {
-  if (_data.countdownTimer) {
-    clearCountdown()
-    startCountdown()
-  }
+  if (!countdownTimerIsRunning()) return
+
+  clearCountdown()
+  startCountdown()
 }
 
 const clearCountdown = () => {
@@ -29,25 +29,27 @@ const clearCountdown = () => {
 }
 
 const startCountdown = () => {
-  if (!_data.countdownTimer) {
-    _data.countdownTimer = countdownTimer(_data.countdownTimeInMinutes,
-      {
-        onCounting: ({ minutes, seconds }) => {
-          countdownMinuteSpan.innerText = minutes
-          countdownSecondSpan.innerText = seconds
-        },
-        onFinished: () => {
-          _api.countdownFinished()
+  if (countdownTimerIsRunning()) return
 
-          clearCountdown()
-          setData()
-        }
+  _data.countdownTimer = countdownTimer(_data.countdownTimeInMinutes,
+    {
+      onCounting: ({ minutes, seconds }) => {
+        countdownMinuteSpan.innerText = minutes
+        countdownSecondSpan.innerText = seconds
+      },
+      onFinished: () => {
+        _api.countdownFinished()
+
+        clearCountdown()
+        setData()
       }
-    )
-  }
+    }
+  )
 }
 
 const incrementCountdown = () => {
+  if (countdownTimerIsRunning()) return
+
   const countdownIncrement = _data.countdownTimeInMinutes + 5
   if (countdownIncrement > 60) return
 
@@ -57,6 +59,8 @@ const incrementCountdown = () => {
 }
 
 const decrementCountdown = () => {
+  if (countdownTimerIsRunning()) return
+
   const countdownDecrement = _data.countdownTimeInMinutes - 5
   if (countdownDecrement < 0) return
 
@@ -65,11 +69,13 @@ const decrementCountdown = () => {
   setData()
 }
 
-function setData() {
+const countdownTimerIsRunning = () => !!_data.countdownTimer
+
+const setData = () => {
   countdownMinuteSpan.innerText = String(_data.countdownTimeInMinutes).padStart(2, '0')
 }
 
-function registerDOMEvents() {
+const registerDOMEvents = () => {
   countdownStartButton.addEventListener('click', () => startCountdown())
   countdownResetButton.addEventListener('click', () => resetCountdown())
   countdownIncrementButton.addEventListener('click', () => incrementCountdown())
