@@ -66,11 +66,11 @@ body {
 
 /* * Timer */
 #countdown>.timer-number {
-  margin: 10px;
+  margin: 0 auto;
 }
 
 #countdown .timer {
-  font-size: 40pt;
+  font-size: 50pt;
 }
 
 /* * Footer */

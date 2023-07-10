@@ -23,16 +23,16 @@ export const execCountdown = ({ onCounting, onFinished }) => {
     onCounting({ minutes, seconds })
 
     if (parseInt(minutes) === 0 && parseInt(seconds) === 0) {
-      stopCountdown()
+      clearCountdown()
       onFinished()
     }
   }, 1000)
 }
 
 /**
- * Stop the countdown
+ * Clear the countdown
  */
-export const stopCountdown = () => {
+export const clearCountdown = () => {
   clearInterval(_countdownInstance)
   _countdownInstance = null
 }

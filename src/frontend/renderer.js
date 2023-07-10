@@ -1,16 +1,17 @@
 import './assets/css/index.css'
 import {
+  clearCountdown,
   countdownIsRunning,
   execCountdown,
   getCountdownTime,
-  setCountdownTime,
-  stopCountdown
+  setCountdownTime
 } from './assets/js/countdown'
 
 // * Elements object
 const countdownMinuteSpan = document.getElementById('countdown-minute')
 const countdownSecondSpan = document.getElementById('countdown-second')
 const countdownStartButton = document.getElementById('countdown-start')
+const countdownStopButton = document.getElementById('countdown-stop')
 const countdownResetButton = document.getElementById('countdown-reset')
 const countdownIncrementButton = document.getElementById('countdown-increment')
 const countdownDecrementButton = document.getElementById('countdown-decrement')
@@ -21,8 +22,16 @@ const _api = window.api
 const resetCountdown = () => {
   if (!countdownIsRunning()) return
 
-  stopCountdown()
+  clearCountdown()
+  setCountdownTimerInHTML()
   startCountdown()
+}
+
+const stopCountdown = () => {
+  if (!countdownIsRunning()) return
+
+  clearCountdown()
+  setCountdownTimerInHTML()
 }
 
 const startCountdown = () => {
@@ -36,7 +45,7 @@ const startCountdown = () => {
     onFinished: () => {
       _api.countdownFinished()
 
-      setCountdownMinutesInHTML()
+      setCountdownTimerInHTML()
     }
   })
 }
@@ -48,7 +57,7 @@ const incrementCountdown = () => {
   if (countdownIncrement > 60) return
 
   setCountdownTime(countdownIncrement)
-  setCountdownMinutesInHTML()
+  setCountdownTimerInHTML()
 }
 
 const decrementCountdown = () => {
@@ -58,16 +67,17 @@ const decrementCountdown = () => {
   if (countdownDecrement < 0) return
 
   setCountdownTime(countdownDecrement)
-  setCountdownMinutesInHTML()
+  setCountdownTimerInHTML()
 }
 
-const setCountdownMinutesInHTML = () => {
+const setCountdownTimerInHTML = () => {
   countdownMinuteSpan.innerText = String(getCountdownTime()).padStart(2, '0')
+  countdownSecondSpan.innerText = String(0).padStart(2, '0')
 }
 
 const setInitialData = () => {
   setCountdownTime(1)
-  setCountdownMinutesInHTML()
+  setCountdownTimerInHTML()
 }
 
 const registerAPIEvents = () => {
@@ -76,6 +86,7 @@ const registerAPIEvents = () => {
 
 const registerDOMEvents = () => {
   countdownStartButton.addEventListener('click', () => startCountdown())
+  countdownStopButton.addEventListener('click', () => stopCountdown())
   countdownResetButton.addEventListener('click', () => resetCountdown())
   countdownIncrementButton.addEventListener('click', () => incrementCountdown())
   countdownDecrementButton.addEventListener('click', () => decrementCountdown())
