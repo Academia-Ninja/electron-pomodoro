@@ -12,6 +12,8 @@ const createWindow = () => {
     app.setAppUserModelId(app.name)
   }
 
+  Menu.setApplicationMenu(null)
+
   const mainWindow = new BrowserWindow({
     width: 300,
     height: 400,
@@ -21,7 +23,9 @@ const createWindow = () => {
     }
   })
 
-  Menu.setApplicationMenu(null)
+  mainWindow.webContents.on('did-finish-load', () => {
+    mainWindow.webContents.send('init')
+  })
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)

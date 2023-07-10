@@ -1,13 +1,18 @@
+let _countdownInstance = null
+let _countdownTimeInMinutes = 0
+
 /**
- * Returns a countdown timer
+ * Execute a countdown timer
  * @param {number} countdownTime
  * @param {Object} options
- * @returns {NodeJS.Timer}
  */
-export const countdownTimer = (countdownTimeInMinutes, { onCounting, onFinished }) => {
-  const countdownDateTime = _getCountdownDateTime(countdownTimeInMinutes)
+export const execCountdown = ({ onCounting, onFinished }) => {
+  const countdownTime = getCountdownTime()
 
-  const countdown = setInterval(() => {
+  if (countdownTime === 0) return
+  const countdownDateTime = _getCountdownDateTime(countdownTime)
+
+  _countdownInstance = setInterval(() => {
     const now = new Date().getTime()
 
     const timeRemaining = countdownDateTime - now
@@ -18,13 +23,39 @@ export const countdownTimer = (countdownTimeInMinutes, { onCounting, onFinished 
     onCounting({ minutes, seconds })
 
     if (parseInt(minutes) === 0 && parseInt(seconds) === 0) {
-      clearInterval(countdown)
+      stopCountdown()
       onFinished()
     }
   }, 1000)
-
-  return countdown
 }
+
+/**
+ * Stop the countdown
+ */
+export const stopCountdown = () => {
+  clearInterval(_countdownInstance)
+  _countdownInstance = null
+}
+
+/**
+ * Set the countdown time
+ * @param {number} time
+ */
+export const setCountdownTime = (time) => {
+  _countdownTimeInMinutes = parseInt(time)
+}
+
+/**
+ * Returns the set countdown time
+ * @returns {number}
+ */
+export const getCountdownTime = () => parseInt(_countdownTimeInMinutes)
+
+/**
+ * Returns true if the countdown is running
+ * @returns {boolean}
+ */
+export const countdownIsRunning = () => !!_countdownInstance
 
 /**
  * Returns the target time of countdown

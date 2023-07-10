@@ -1,5 +1,11 @@
 import './assets/css/index.css'
-import { countdownTimer } from './assets/js/countdown'
+import {
+  countdownIsRunning,
+  execCountdown,
+  getCountdownTime,
+  setCountdownTime,
+  stopCountdown
+} from './assets/js/countdown'
 
 // * Elements object
 const countdownMinuteSpan = document.getElementById('countdown-minute')
@@ -11,68 +17,61 @@ const countdownDecrementButton = document.getElementById('countdown-decrement')
 
 // * Globals object
 const _api = window.api
-const _data = {
-  countdownTimeInMinutes: 1,
-  countdownTimer: null
-}
 
 const resetCountdown = () => {
-  if (!countdownTimerIsRunning()) return
+  if (!countdownIsRunning()) return
 
-  clearCountdown()
+  stopCountdown()
   startCountdown()
 }
 
-const clearCountdown = () => {
-  clearInterval(_data.countdownTimer)
-  _data.countdownTimer = null
-}
-
 const startCountdown = () => {
-  if (countdownTimerIsRunning()) return
+  if (countdownIsRunning()) return
 
-  _data.countdownTimer = countdownTimer(_data.countdownTimeInMinutes,
-    {
-      onCounting: ({ minutes, seconds }) => {
-        countdownMinuteSpan.innerText = minutes
-        countdownSecondSpan.innerText = seconds
-      },
-      onFinished: () => {
-        _api.countdownFinished()
+  execCountdown({
+    onCounting: ({ minutes, seconds }) => {
+      countdownMinuteSpan.innerText = minutes
+      countdownSecondSpan.innerText = seconds
+    },
+    onFinished: () => {
+      _api.countdownFinished()
 
-        clearCountdown()
-        setData()
-      }
+      setCountdownMinutesInHTML()
     }
-  )
+  })
 }
 
 const incrementCountdown = () => {
-  if (countdownTimerIsRunning()) return
+  if (countdownIsRunning()) return
 
-  const countdownIncrement = _data.countdownTimeInMinutes + 5
+  const countdownIncrement = getCountdownTime() + 5
   if (countdownIncrement > 60) return
 
-  _data.countdownTimeInMinutes = countdownIncrement
-
-  setData()
+  setCountdownTime(countdownIncrement)
+  setCountdownMinutesInHTML()
 }
 
 const decrementCountdown = () => {
-  if (countdownTimerIsRunning()) return
+  if (countdownIsRunning()) return
 
-  const countdownDecrement = _data.countdownTimeInMinutes - 5
+  const countdownDecrement = getCountdownTime() - 5
   if (countdownDecrement < 0) return
 
-  _data.countdownTimeInMinutes = countdownDecrement
-
-  setData()
+  setCountdownTime(countdownDecrement)
+  setCountdownMinutesInHTML()
 }
 
-const countdownTimerIsRunning = () => !!_data.countdownTimer
+const setCountdownMinutesInHTML = () => {
+  countdownMinuteSpan.innerText = String(getCountdownTime()).padStart(2, '0')
+}
 
-const setData = () => {
-  countdownMinuteSpan.innerText = String(_data.countdownTimeInMinutes).padStart(2, '0')
+const setInitialData = () => {
+  setCountdownTime(1)
+  setCountdownMinutesInHTML()
+}
+
+const registerAPIEvents = () => {
+  _api.onInit(() => setInitialData())
 }
 
 const registerDOMEvents = () => {
@@ -82,9 +81,9 @@ const registerDOMEvents = () => {
   countdownDecrementButton.addEventListener('click', () => decrementCountdown())
 }
 
-function render() {
-  setData()
+const init = () => {
+  registerAPIEvents()
   registerDOMEvents()
 }
 
-window.addEventListener('load', render)
+window.addEventListener('load', init)
