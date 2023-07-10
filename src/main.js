@@ -1,19 +1,27 @@
-const { app, BrowserWindow } = require('electron')
-const path = require('path')
+import { app, BrowserWindow, Menu } from 'electron'
+import path from 'path'
+
+import './backend'
 
 if (require('electron-squirrel-startup')) {
   app.quit()
 }
 
 const createWindow = () => {
+  if (process.platform === 'win32') {
+    app.setAppUserModelId(app.name)
+  }
+
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
+    width: 300,
+    height: 400,
+    resizable: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js'),
-      nodeIntegration: true
+      preload: path.join(__dirname, 'preload.js')
     }
   })
+
+  Menu.setApplicationMenu(null)
 
   if (MAIN_WINDOW_VITE_DEV_SERVER_URL) {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL)

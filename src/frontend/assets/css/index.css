@@ -1,0 +1,82 @@
+:root {
+  /* Default color */
+  --background-color: #d7e6d5;
+
+  --primary-color: #d3d3d3;
+  --danger-color: #EB140D;
+  --success-color: #50B245;
+
+  --text-color: #ffffff;
+  --text-shadow-color: #281b24;
+}
+
+/* Reset page */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main configuration */
+body {
+  width: 100%;
+  height: 100vh;
+
+  background-color: var(--background-color);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  max-width: 38rem;
+}
+
+.color-text {
+  color: var(--text-color);
+}
+
+#app {
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+#app > #header,
+#app > #countdown,
+#app > #footer {
+  display: flex;
+  justify-content: center;
+  padding: 10%;
+}
+
+#countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer {
+  padding: 1px;
+}
+
+/* Buttons svg */
+.btn-countdown {
+  background-color: transparent;
+  cursor: pointer;
+  border: none;
+  
+}
+
+.btn-countdown img {
+  scale: 1.5;
+}
+
+/* Timer */
+#countdown > .timer-number{
+  margin: 10px;
+}
+.countdown .timer {
+  font-size: 40pt;
+}
+
+/* Footer */
+#footer #countdown-start {
+  margin-right: 30px; /*review*/
+}

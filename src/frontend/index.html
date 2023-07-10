@@ -2,15 +2,40 @@
 <html>
 
 <head>
-    <meta charset="UTF-8" />
-    <title>Hello World!</title>
-
+  <meta http-equiv="Content-Security-Policy" content="script-src 'self' 'wasm-unsafe-eval'">
+  <meta charset="UTF-8" />
+  <title>Pomodoro</title>
 </head>
 
 <body>
-    <h1>💖 Hello World!</h1>
-    <p>Welcome to your Electron application.</p>
-    <script type="module" src="./renderer.js"></script>
+  <main id="app">
+    <header id="header">
+      <img id="img-tomato" src="./assets/images/tomato.png" width="50"/>
+    </header>
+
+    <section id="countdown" class="countdown">
+      <div>
+        <button id="countdown-decrement" class="btn-countdown btn-section"><img src="./assets/images/decrement.svg" /></button>
+      </div>
+
+      <div class="timer-number color-text">
+        <span id="countdown-minute" class="timer">25</span>
+        <span class="timer">:</span>
+        <span id="countdown-second" class="timer">00</span>
+      </div>
+
+      <div>
+        <button id="countdown-increment" class="btn-countdown btn-section"><img src="./assets/images/increment.svg" /></button>
+      </div>
+    </section>
+
+    <footer id="footer" class="actions">
+      <button id="countdown-start" class="btn-countdown"><img src="./assets/images/start.svg" /></button>
+      <button id="countdown-reset" class="btn-countdown"><img src="./assets/images/reset.svg" /></button>
+    </footer>
+  </main>
+
+  <script type="module" crossorigin src="./renderer.js"></script>
 </body>
 
 </html>
