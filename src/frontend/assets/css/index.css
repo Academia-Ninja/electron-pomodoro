@@ -1,5 +1,5 @@
 :root {
-  /* Default color */
+  /* * Default color */
   --background-color: #d7e6d5;
 
   --primary-color: #d3d3d3;
@@ -10,14 +10,14 @@
   --text-shadow-color: #281b24;
 }
 
-/* Reset page */
+/* * Reset page */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Main configuration */
+/* * Main configuration */
 body {
   width: 100%;
   height: 100vh;
@@ -27,10 +27,6 @@ body {
   max-width: 38rem;
 }
 
-.color-text {
-  color: var(--text-color);
-}
-
 #app {
   height: 100vh;
 
@@ -38,9 +34,9 @@ body {
   flex-direction: column;
 }
 
-#app > #header,
-#app > #countdown,
-#app > #footer {
+#app>#header,
+#app>#countdown,
+#app>#footer {
   display: flex;
   justify-content: center;
   padding: 10%;
@@ -53,30 +49,31 @@ body {
 }
 
 .timer {
+  color: var(--text-color);
   padding: 1px;
 }
 
-/* Buttons svg */
+/* * Buttons svg */
 .btn-countdown {
   background-color: transparent;
   cursor: pointer;
   border: none;
-
 }
 
 .btn-countdown img {
   scale: 1.5;
 }
 
-/* Timer */
-#countdown > .timer-number{
+/* * Timer */
+#countdown>.timer-number {
   margin: 10px;
 }
-.countdown .timer {
+
+#countdown .timer {
   font-size: 40pt;
 }
 
-/* Footer */
-#footer #countdown-start {
-  margin-right: 30px; /*review*/
+/* * Footer */
+#footer button {
+  margin: 0 20px;
 }
