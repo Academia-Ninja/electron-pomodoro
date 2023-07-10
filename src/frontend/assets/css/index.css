@@ -1,59 +1,82 @@
 :root {
-  --primary-color: #8cab94;
-  --text-primary-color: #281b24;
-  --text-secondary-color: #ffffff;
+  /* Default color */
+  --background-color: #d7e6d5;
+
+  --primary-color: #d3d3d3;
+  --danger-color: #EB140D;
+  --success-color: #50B245;
+
+  --text-color: #ffffff;
+  --text-shadow-color: #281b24;
 }
 
-html {
-  max-height: 100vh;
+/* Reset page */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
+/* Main configuration */
 body {
-  background-color: var(--primary-color);
+  width: 100%;
+  height: 100vh;
 
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  margin: 0 auto;
+  background-color: var(--background-color);
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   max-width: 38rem;
-  display: block;
+}
+
+.color-text {
+  color: var(--text-color);
 }
 
 #app {
   height: 100vh;
 
-  align-items: center;
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
+}
+
+#app > #header,
+#app > #countdown,
+#app > #footer {
+  display: flex;
   justify-content: center;
-
-  position: relative;
+  padding: 10%;
 }
 
-.countdown .timer {
-  color: var(--text-primary-color);
-
-  font-size: 60pt;
+#countdown {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.countdown .cycle {
-  color: var(--text-primary-color);
-
-  font-weight: bold;
-  font-size: 15pt;
+.timer {
+  padding: 1px;
 }
 
-.actions button {
+/* Buttons svg */
+.btn-countdown {
   background-color: transparent;
-  color: var(--text-secondary-color);
   cursor: pointer;
   border: none;
 
-  align-items: center;
-
-  margin: 0 10px;
 }
 
-.actions button img {
-  scale: 1.5
+.btn-countdown img {
+  scale: 1.5;
+}
+
+/* Timer */
+#countdown > .timer-number{
+  margin: 10px;
+}
+.countdown .timer {
+  font-size: 40pt;
+}
+
+/* Footer */
+#footer #countdown-start {
+  margin-right: 30px; /*review*/
 }
