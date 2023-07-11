@@ -1,10 +1,10 @@
 :root {
   /* * Default color */
-  --background-color: #d7e6d5;
+  --background-color: #1b1521;
 
   --primary-color: #d3d3d3;
-  --danger-color: #EB140D;
-  --success-color: #50B245;
+  --danger-color: #c60052;
+  --success-color: #c0d860;
 
   --text-color: #ffffff;
   --text-shadow-color: #281b24;
@@ -46,6 +46,8 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  height: 90vh;
 }
 
 .timer {
